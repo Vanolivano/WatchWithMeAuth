@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace PresentationLayerAngularAuth.Controllers
+namespace  BusinessLogicLayer.Controllers
 {
     public class OidcConfigurationController : Controller
     {

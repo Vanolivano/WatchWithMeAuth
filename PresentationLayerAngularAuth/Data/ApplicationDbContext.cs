@@ -1,21 +1,21 @@
-﻿using PresentationLayerAngularAuth.Models;
-using IdentityServer4.EntityFramework.Options;
+﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BusinessLogicLayer.Domains;
 
 namespace PresentationLayerAngularAuth.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<AppUser>
     {
-        public ApplicationDbContext(
-            DbContextOptions options,
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public ApplicationDbContext(DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+            //base.Database.EnsureDeleted();// Удаляет базу если она есть
+            //base.Database.EnsureCreated(); // Создает базу если ее нет
+            //base.Database.Migrate(); //Выполняет последнюю миграцию
         }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,10 +8,16 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using PresentationLayerAngularAuth.Data;
-using PresentationLayerAngularAuth.Models;
+using BusinessLogicLayer.Domains;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BusinessLogicLayer.EF;
+using BusinessLogicLayer.AreaServices.UserService;
+using BusinessLogicLayer.AreaServices.UserService.UserFactory;
+using BusinessLogicLayer.AreaServices.UserService.Impl;
+using BusinessLogicLayer.AreaServices.UserService.UserFactory.Impl;
+using DataAccessLayer.UnitOfWork;
 
 namespace PresentationLayerAngularAuth
 {
@@ -30,11 +37,14 @@ namespace PresentationLayerAngularAuth
                 options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>()
+            services.AddMvc()
+                .AddApplicationPart(Assembly.Load("BusinessLogicLayer"));
+
+            services.AddDefaultIdentity<AppUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<AppUser, ApplicationDbContext>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
@@ -45,6 +55,10 @@ namespace PresentationLayerAngularAuth
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddScoped<DbContext, ApplicationDbContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserAreaService, UserAreaService>();
+            services.AddScoped<IUserFactory, UserFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,7 +102,8 @@ namespace PresentationLayerAngularAuth
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

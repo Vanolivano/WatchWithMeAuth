@@ -1,6 +1,6 @@
 using System;
 
-namespace PresentationLayerAngularAuth
+namespace BusinessLogicLayer.Models
 {
     public class WeatherForecast
     {

@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using BusinessLogicLayer.Models;
+using BusinessLogicLayer.AreaServices.UserService;
 
-namespace PresentationLayerAngularAuth.Controllers
+namespace  BusinessLogicLayer.Controllers
 {
     [Authorize]
     [ApiController]
@@ -19,15 +21,18 @@ namespace PresentationLayerAngularAuth.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IUserAreaService _userAreaService;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IUserAreaService userAreaService)
         {
             _logger = logger;
+            _userAreaService = userAreaService;
         }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var users = _userAreaService.GetUsers();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
