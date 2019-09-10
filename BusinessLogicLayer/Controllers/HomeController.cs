@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BusinessLogicLayer.Domains;
-using BusinessLogicLayer.EF;
 using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 

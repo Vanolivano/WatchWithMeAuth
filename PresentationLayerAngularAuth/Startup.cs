@@ -12,7 +12,6 @@ using BusinessLogicLayer.Domains;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BusinessLogicLayer.EF;
 using BusinessLogicLayer.AreaServices.UserService;
 using BusinessLogicLayer.AreaServices.UserService.UserFactory;
 using BusinessLogicLayer.AreaServices.UserService.Impl;

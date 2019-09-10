@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using BusinessLogicLayer.AreaServices.UserService;
 using BusinessLogicLayer.Domains;
-using BusinessLogicLayer.EF;
 using DataAccessLayer.UnitOfWork;
 using Microsoft.AspNetCore.Mvc;
 
