@@ -32,7 +32,7 @@ namespace  BusinessLogicLayer.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var users = _userAreaService.GetUsers();
+            //var users = _userAreaService.GetUsers();
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
