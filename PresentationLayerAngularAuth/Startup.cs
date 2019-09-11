@@ -2,25 +2,16 @@ using Microsoft.AspNetCore.Authentication;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using PresentationLayerAngularAuth.Data;
 using BusinessLogicLayer.Domains;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using BusinessLogicLayer.AreaServices.UserService;
-using BusinessLogicLayer.AreaServices.UserService.UserFactory;
-using BusinessLogicLayer.AreaServices.UserService.Impl;
-using BusinessLogicLayer.AreaServices.UserService.UserFactory.Impl;
-using DataAccessLayer.UnitOfWork;
 
 namespace PresentationLayerAngularAuth
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -54,10 +45,8 @@ namespace PresentationLayerAngularAuth
             {
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddScoped<DbContext, ApplicationDbContext>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserAreaService, UserAreaService>();
-            services.AddScoped<IUserFactory, UserFactory>();
+            //add custom Extensions
+            AddExtensions(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
