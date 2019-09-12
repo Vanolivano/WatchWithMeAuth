@@ -7,28 +7,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./lobby.component.css'],
 })
 export class LobbyComponent {
-  public room: Room;
+  // public room: Room;
 
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
-    this.http.get<Room>(this.baseUrl + 'room').subscribe(result => {
-      this.room = result;
-    }, error => console.error(error));
-  }
+  // constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  //   this.http.get<Room>(this.baseUrl + 'room').subscribe(result => {
+  //     this.room = result;
+  //   }, error => console.error(error));
+  // }
 
-  public createRoom() {
-    console.log("Start createRoom()");
+  // public createRoom() {
+  //   console.log("Start createRoom()");
 
-    //console.log("After http.getRoom");
-    console.log("Name room " + this.room.name);
-    console.log("End createRoom()");
-  }
-
-
-}
-interface Room {
-  id: number;
-  name: string;
-  status: string;
-  creatorId: string;
+  //   //console.log("After http.getRoom");
+  //   console.log("Name room " + this.room.name);
+  //   console.log("End createRoom()");
+  // }
 }
