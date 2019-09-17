@@ -2,8 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Inject } from "@angular/core";
 
 export class RoomService {
-    room: Room;
-
+    
     constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
     }
 
@@ -13,8 +12,7 @@ export class RoomService {
                 .toPromise()
                 .then(
                     res => { // Success
-                        this.room = res;
-                        resolve();
+                        resolve(res);
                     },
                     msg => { // Error
                         reject(msg);
@@ -25,11 +23,13 @@ export class RoomService {
     }
 
     public transformUrl(url: string): string {
-        if (url == '' || url == null) { return; }
+        if (url == '' || url == null) { return null; }
         let schema = "https://www.youtube.com/embed/";
         let idVideo = this.convertYoutube(url);
         if (idVideo != null)
             return schema + idVideo;
+            else
+            return null;
     }
     
     private convertYoutube(url: string) {

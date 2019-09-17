@@ -15,12 +15,16 @@ export class RoomComponent implements OnInit {
   constructor(public roomService: RoomService) { }
 
   ngOnInit() {
-    this.roomService.createRoom();
-    this.url = this.roomService.transformUrl("https://www.youtube.com/embed/5CAPMA8f68U");
+    this.roomService.createRoom().then(res => this.room = res);
+    this.url = this.roomService.transformUrl("https://youtu.be/eLAHSRmFFzE?list=RDMMeLAHSRmFFzE");
   }
 
   public transformUrl(url: string) {
-    this.url = this.roomService.transformUrl(url);
+    if (url != null && url != "") {
+      let result = this.roomService.transformUrl(url);
+      if (result != null)
+        this.url = result;
+    }
   }
 }
 
