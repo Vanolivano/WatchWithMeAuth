@@ -64,6 +64,9 @@ namespace PresentationLayerAngularAuth.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("TEXT");
 
@@ -82,6 +85,8 @@ namespace PresentationLayerAngularAuth.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -104,14 +109,9 @@ namespace PresentationLayerAngularAuth.Migrations
                     b.Property<string>("Location")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("RoomId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IdentityId");
-
-                    b.HasIndex("RoomId");
 
                     b.ToTable("Customers");
                 });
@@ -121,6 +121,9 @@ namespace PresentationLayerAngularAuth.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("CreatorId")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
@@ -343,15 +346,18 @@ namespace PresentationLayerAngularAuth.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BusinessLogicLayer.Domains.AppUser", b =>
+                {
+                    b.HasOne("BusinessLogicLayer.Domains.Room", null)
+                        .WithMany("Users")
+                        .HasForeignKey("RoomId");
+                });
+
             modelBuilder.Entity("BusinessLogicLayer.Domains.Customer", b =>
                 {
                     b.HasOne("BusinessLogicLayer.Domains.AppUser", "Identity")
                         .WithMany()
                         .HasForeignKey("IdentityId");
-
-                    b.HasOne("BusinessLogicLayer.Domains.Room", null)
-                        .WithMany("Users")
-                        .HasForeignKey("RoomId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

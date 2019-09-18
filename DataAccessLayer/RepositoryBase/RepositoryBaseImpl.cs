@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccessLayer.RepositoryBase
 {
-    internal class RepositoryBaseImpl<T>: IRepositoryBase<T> where T : class
+    internal class RepositoryBaseImpl<T> : IRepositoryBase<T> where T : class
     {
         private readonly DbContext _dataBaseContext;
-        
+
         public RepositoryBaseImpl(DbContext context)
         {
             _dataBaseContext = context;
         }
-        
+
         public IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = "")
         {
             IQueryable<T> query = GetQueryable(filter, includeProperties);
@@ -71,6 +71,13 @@ namespace DataAccessLayer.RepositoryBase
         public virtual void Add(T toAdd)
         {
             _dataBaseContext.Set<T>().Add(toAdd);
+            
+        }
+        public virtual T AddAndSave(T toAdd)
+        {
+            _dataBaseContext.Set<T>().Add(toAdd);
+            _dataBaseContext.SaveChanges();
+            return toAdd;
         }
 
         public async void AddAsync(T toAdd)
@@ -80,25 +87,25 @@ namespace DataAccessLayer.RepositoryBase
 
         public void AddOrUpdate(T toAddOrUpdate)
         {
-            var entry = _dataBaseContext.Entry(toAddOrUpdate);  
-            switch (entry.State)  
-            {  
-                case EntityState.Detached:  
-                    _dataBaseContext.Add(toAddOrUpdate);  
-                    break;  
-                case EntityState.Modified:  
-                    _dataBaseContext.Update(toAddOrUpdate);  
-                    break;  
-                case EntityState.Added:  
-                    _dataBaseContext.Add(toAddOrUpdate);  
-                    break;  
-                case EntityState.Unchanged:  
+            var entry = _dataBaseContext.Entry(toAddOrUpdate);
+            switch (entry.State)
+            {
+                case EntityState.Detached:
+                    _dataBaseContext.Add(toAddOrUpdate);
+                    break;
+                case EntityState.Modified:
+                    _dataBaseContext.Update(toAddOrUpdate);
+                    break;
+                case EntityState.Added:
+                    _dataBaseContext.Add(toAddOrUpdate);
+                    break;
+                case EntityState.Unchanged:
                     //item already in db no need to do anything  
                     break;
 
-                default:  
-                    throw new ArgumentOutOfRangeException();  
-            }  
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public virtual void Update(T toUpdate)
