@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RoomService } from './service/room-service';
+import { Room } from './model/Room';
 
 @Component({
   selector: 'app-room',
@@ -25,6 +26,10 @@ export class RoomComponent implements OnInit {
       if (result != null)
         this.url = result;
     }
+  }
+  public changeTitle(newName: string) {
+    this.room.name = newName;
+    this.roomService.editRoom(this.room);
   }
 }
 

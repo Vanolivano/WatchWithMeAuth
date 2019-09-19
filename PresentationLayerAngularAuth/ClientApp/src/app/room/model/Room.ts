@@ -1,4 +1,4 @@
-interface Room {
+export class Room {
     id: number;
     name: string;
     status: string;

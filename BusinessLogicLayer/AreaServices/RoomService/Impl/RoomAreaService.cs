@@ -26,5 +26,13 @@ namespace BusinessLogicLayer.AreaServices.RoomService.Impl
             }
             return _roomFactory.CastToRoomView(room);
         }
+
+        public void EditRoom(RoomView roomView)
+        {
+            var room = _unitOfWork.GetRepository<Room>().FindSingle(roomView.Id);
+            room.Name = roomView.Name;
+            _unitOfWork.GetRepository<Room>().Update(room);
+            _unitOfWork.Save();
+        }
     }
 }

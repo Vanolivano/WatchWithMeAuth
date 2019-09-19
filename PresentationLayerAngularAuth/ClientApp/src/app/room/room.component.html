@@ -13,8 +13,7 @@
 
     </div>
     <div class="room-settings">
-      <!-- <span *ngIf="roomService.room" class="text-light">{{roomService.room.name}}</span> -->
-      <span *ngIf="this.room" class="text-light">{{this.room.name}}</span>
+      <input *ngIf="this.room" #inputId class="text-light active-title" type="text" (change)="changeTitle(inputId.value)" [value]="this.room.name"/>
       <i class="fas fa-plus text-light room-icon"></i>
       <i class="fas fa-bars text-light room-icon"></i>
     </div>

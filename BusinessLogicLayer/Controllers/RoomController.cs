@@ -29,12 +29,18 @@ namespace BusinessLogicLayer.Controllers
         [HttpGet]
         public RoomView Get()
         {
-            var users = _userAreaService.GetUsers();
+            //var users = _userAreaService.GetUsers();
             var currentUser = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var room = _roomAreaService.CreateRoom(currentUser);
-            
+
             return room;
         }
+        [HttpPost("[action]")]
+        public void Edit([FromBody]RoomView roomView)
+        {
+            if(roomView.Id!=0)
+            _roomAreaService.EditRoom(roomView);
+        }
     }
-    
+
 }
