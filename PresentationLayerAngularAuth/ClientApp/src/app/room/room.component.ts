@@ -27,8 +27,9 @@ export class RoomComponent implements OnInit {
         this.url = result;
     }
   }
-  public changeTitle(newName: string) {
-    this.room.name = newName;
+  public changeTitle() {
+    if (!this.room.name || /^\s*$/.test(this.room.name))
+      this.room.name = "*unnamed room";
     this.roomService.editRoom(this.room);
   }
 }

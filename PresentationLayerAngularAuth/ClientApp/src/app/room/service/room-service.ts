@@ -24,7 +24,6 @@ export class RoomService {
     }
 
     public editRoom(room: Room) {
-        console.log("Room " + room.name);
         this.http.post(this.baseUrl + 'room/edit', room).toPromise();
     }
 

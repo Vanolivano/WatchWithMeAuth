@@ -13,7 +13,7 @@
 
     </div>
     <div class="room-settings">
-      <input *ngIf="this.room" #inputId class="text-light active-title" type="text" (change)="changeTitle(inputId.value)" [value]="this.room.name"/>
+      <input *ngIf="this.room" class="text-light active-title" type="text" (change)="changeTitle()" [(ngModel)]="this.room.name"/>
       <i class="fas fa-plus text-light room-icon"></i>
       <i class="fas fa-bars text-light room-icon"></i>
     </div>
